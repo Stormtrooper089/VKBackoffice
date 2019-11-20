@@ -8,18 +8,26 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.net.MalformedURLException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @Controller
 @RequestMapping("/api")
 public class QrController {
 
-    // TODO: Refactoring is left this is just POC code
+
 
     @RequestMapping(path = "/generateQR", method = RequestMethod.GET)
     public String generateQRPdf() {
@@ -54,7 +62,7 @@ public class QrController {
 
 
     @RequestMapping(path = "/generateQR6", method = RequestMethod.GET)
-    public String generateQRPdfTable() {
+    public ResponseEntity generateQRPdfTable() {
         int width = 200;
         int height = 200; // change the height and width as per your requirement
 
@@ -100,7 +108,17 @@ public class QrController {
         finally {
             document.close();
         }
-        return "test";
+        Path path = Paths.get("sample3columpdf.pdf");
+        Resource resource = null;
+        try {
+            resource = new UrlResource(path.toUri());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(MediaType.APPLICATION_OCTET_STREAM_VALUE))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                .body(resource);
     }
 
     private PdfPCell newCell(String text){
