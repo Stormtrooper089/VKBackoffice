@@ -1,4 +1,4 @@
-package com.rhovega.vankon.qr;
+package com.rhovega.vankon.controller;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
@@ -8,21 +8,21 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.rhovega.vankon.qr.model.CreateQrRequest;
+import com.rhovega.vankon.qr.service.QrCodeServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import org.apache.poi.xssf.usermodel.*;
-import org.apache.poi.ss.usermodel.*;
-
-import org.apache.poi.util.IOUtils;
-
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -31,7 +31,8 @@ import java.nio.file.Paths;
 @RequestMapping("/api")
 public class QrController {
 
-
+    @Autowired
+    private QrCodeServiceImpl qrCodeService;
 
     @RequestMapping(path = "/generateQR", method = RequestMethod.GET)
     public String generateQRPdf() {
@@ -158,88 +159,17 @@ public class QrController {
 
 
 
-    @RequestMapping(path = "/generateQRExcel", method = RequestMethod.GET)
-    public ResponseEntity generateQRExcelTable() {
-        int width = 200;
-        int height = 200; // change the height and width as per your requirement
-
-// (ImageIO.getWriterFormatNames() returns a list of supported formats)
-        String imageFormat = "png"; // could be "gif", "tiff", "jpeg"
-        Workbook workbook = new XSSFWorkbook();
-        Sheet sheet = workbook.createSheet("MYSheet");
-        try {
-            int row=0;
-            for (int i = 1000; i < 10000; i = i + 1000) {
-                //Row row = sheet.createRow(i-1000);
-                row++;
-                Row newRow= sheet.createRow(row);
-                for(int j=0;j<3;j++){
-                    //GENERATE COMPANY NAME ROW
-                    Cell newCell= newRow.createCell(j);
-                    newCell.setCellValue((String)"COM"+row+j);
-                }
-                row++;
-                for(int j=0;j<3;j++){
-
-                    //GENERATE QR CODE
-                    BitMatrix bitMatrix = new QRCodeWriter().encode(i+""+j, BarcodeFormat.QR_CODE, width, height);
-                    MatrixToImageWriter.writeToStream(bitMatrix, imageFormat, new FileOutputStream(new File("qrcode_9821837934.png")));
-
-                    //READ IMAGE
-                    InputStream inputStream = new FileInputStream("qrcode_9821837934.png");
-                    byte[] imageBytes = IOUtils.toByteArray(inputStream);
-                    int pictureureIdx = workbook.addPicture(imageBytes, Workbook.PICTURE_TYPE_PNG);
-                    inputStream.close();
-
-                    //INITIALIZE EXCEL FOR PICTURE
-                    CreationHelper helper = workbook.getCreationHelper();
-                    Drawing drawing = sheet.createDrawingPatriarch();
-                    ClientAnchor anchor = helper.createClientAnchor();
-                    anchor.setCol1(j);
-                    anchor.setRow1(row);
-
-                    //DRAW PICTURE
-                    Picture pict = drawing.createPicture(anchor,pictureureIdx);
-                    pict.resize();
-
-                }
-                row++;
-                newRow= sheet.createRow(row);
-                for(int j=0;j<3;j++){
-                    //GENERATE COMPANY NAME ROW
-                    Cell newCell= newRow.createCell(j);
-                    newCell.setCellValue((String)"* "+i+" *");
-                }
+    @RequestMapping(path = "/generateQRExcel", method = RequestMethod.POST)
+    public ResponseEntity printQrForExcel(@RequestBody CreateQrRequest qrRequest) {
+        if(qrRequest != null) {
+            Resource resource = qrCodeService.generateCodeByProductToExcel(qrRequest);
+            if (resource != null) {
+                return ResponseEntity.ok()
+                        .contentType(MediaType.parseMediaType(MediaType.APPLICATION_OCTET_STREAM_VALUE))
+                        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                        .body(resource);
             }
-        } catch (Exception e) {
-            System.out.print(e + "");
         }
-        finally {
-            //document.close();
-        }
-
-        try {
-
-            FileOutputStream fileOut = null;
-            fileOut = new FileOutputStream("output.xlsx");
-            workbook.write(fileOut);
-            fileOut.close();
-        }catch (IOException e){
-            System.out.print(e + "");
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        Path path = Paths.get("output.xlsx");
-        Resource resource = null;
-        try {
-            resource = new UrlResource(path.toUri());
-        }catch (MalformedURLException e){
-            System.out.print(e + "");
-        }
-        return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(MediaType.APPLICATION_OCTET_STREAM_VALUE))
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-                .body(resource);
+        return null;
     }
 }
