@@ -5,7 +5,10 @@ import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+import com.vk.backoffice.qr.entity.QrMeta;
 import com.vk.backoffice.qr.model.CreateQrRequest;
+import com.vk.backoffice.qr.model.QrMaster;
+import com.vk.backoffice.qr.repository.GeneratedQrMetaInfoRepo;
 import com.vk.backoffice.qr.util.CodeGenerator;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.util.IOUtils;
@@ -19,6 +22,7 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -31,6 +35,9 @@ public class QrCodeServiceImpl {
     private final String IMAGE_FORMAT="png";
     private final int QR_WIDTH = 200;
     private final int QR_HEIGHT = 200;
+
+    @Autowired
+    private GeneratedQrMetaInfoRepo generatedQrMetaInfoRepo;
 
     public Resource generateCodeByProductToExcel(CreateQrRequest qrRequest){
 
@@ -129,5 +136,24 @@ public class QrCodeServiceImpl {
             System.out.print(e + "");
             return null;
         }
+    }
+
+    public List<QrMaster> getQrMasterInformation(){
+        List<QrMaster> qrMasters = new ArrayList<>();
+        QrMaster qrMaster = new QrMaster();
+        List<QrMeta> qrMetaList = generatedQrMetaInfoRepo.findAll();
+        for (QrMeta qrMeta:qrMetaList) {
+            qrMaster.setId(qrMeta.getId());
+            qrMaster.setBatchId(qrMeta.getBatchId());
+            qrMaster.setPoints(qrMeta.getPoints());
+            qrMaster.setActivationStatus(qrMeta.getActivationStatus());
+            qrMaster.setCreatedBy(qrMeta.getCreatedBy());
+            qrMaster.setCreationDate(qrMeta.getCreationDate());
+            qrMaster.setModifiedDate(qrMeta.getModifiedDate());
+            qrMaster.setModifiedBy(qrMeta.getModifiedBy());
+            qrMaster.setProductId(qrMeta.getProductId());
+            qrMasters.add(qrMaster);
+        }
+        return qrMasters;
     }
 }

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 import com.vk.backoffice.qr.entity.QRGenerated;
 import com.vk.backoffice.qr.model.CreateQrRequest;
-import com.vk.backoffice.repository.GeneratedQrCodeRepository;
+import com.vk.backoffice.qr.repository.GeneratedQrCodeRepository;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
