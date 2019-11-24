@@ -120,7 +120,7 @@ public class QrCodeServiceImpl {
         }
     }
 
-    private Resource createResource(String outputFileName){
+    public Resource createResource(String outputFileName){
         try {
             Path path = Paths.get(outputFileName);
             Resource resource = new UrlResource(path.toUri());
