@@ -141,26 +141,27 @@ public class QrCodeServiceImpl {
 
     public List<QrMaster> getQrMasterInformation(){
         List<QrMaster> qrMasters = new ArrayList<>();
-        QrMaster qrMaster = new QrMaster();
-        List<QrMeta> qrMetaList = new ArrayList<QrMeta>();
-        		qrMetaList = generatedQrMetaInfoRepo.findAll();
         
+       Optional<QrMeta> qrMeta =  generatedQrMetaInfoRepo.findById((long) 1);
         
-        	for (QrMeta qrMeta:qrMetaList) {
+        if(qrMeta.isPresent()) {
         	
-                qrMaster.setId(qrMeta.getId());
-                qrMaster.setBatchId(qrMeta.getBatchId());
-                qrMaster.setPoints(qrMeta.getPoints());
-                qrMaster.setActivationStatus(qrMeta.getActivationStatus());
-                qrMaster.setCreatedBy(qrMeta.getCreatedBy());
-                qrMaster.setCreationDate(qrMeta.getCreationDate());
-                qrMaster.setModifiedDate(qrMeta.getModifiedDate());
-                qrMaster.setModifiedBy(qrMeta.getModifiedBy());
-                qrMaster.setProductId(qrMeta.getProductId());
+        
+        	
+        		QrMaster qrMaster = new QrMaster();
+                qrMaster.setId(qrMeta.get().getId());
+                qrMaster.setBatchId(qrMeta.get().getBatchId());
+                qrMaster.setPoints(qrMeta.get().getPoints());
+                qrMaster.setActivationStatus(qrMeta.get().getActivationStatus());
+                qrMaster.setCreatedBy(qrMeta.get().getCreatedBy());
+                qrMaster.setCreationDate(qrMeta.get().getCreationDate());
+                qrMaster.setModifiedDate(qrMeta.get().getModifiedDate());
+                qrMaster.setModifiedBy(qrMeta.get().getModifiedBy());
+                qrMaster.setProductId(qrMeta.get().getProductId());
                 qrMasters.add(qrMaster);
-            }
+           
         
-        
+        }
         return qrMasters;
     }
 }

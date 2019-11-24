@@ -10,97 +10,107 @@ public class QrMaster {
 
     private String batchId;
 
-    private int numberOfQrGenerated;
+    private String numberOfQrGenerated;
 
-    private int points;
+    private String points;
 
-    private int activationStatus;
+    private String activationStatus;
 
-    private Date creationDate;
+    private String creationDate;
 
     private String createdBy;
 
-    private Date modifiedDate;
+    private String modifiedDate;
 
     private String modifiedBy;
 
-    public Long getId() {
-        return id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public String getProductId() {
-        return productId;
-    }
+	public String getProductId() {
+		return productId;
+	}
 
-    public void setProductId(String productId) {
-        this.productId = productId;
-    }
+	public void setProductId(String productId) {
+		this.productId = productId;
+	}
 
-    public String getBatchId() {
-        return batchId;
-    }
+	public String getBatchId() {
+		return batchId;
+	}
 
-    public void setBatchId(String batchId) {
-        this.batchId = batchId;
-    }
+	public void setBatchId(String batchId) {
+		this.batchId = batchId;
+	}
 
-    public int getNumberOfQrGenerated() {
-        return numberOfQrGenerated;
-    }
+	public String getNumberOfQrGenerated() {
+		return numberOfQrGenerated;
+	}
 
-    public void setNumberOfQrGenerated(int numberOfQrGenerated) {
-        this.numberOfQrGenerated = numberOfQrGenerated;
-    }
+	public void setNumberOfQrGenerated(String numberOfQrGenerated) {
+		this.numberOfQrGenerated = numberOfQrGenerated;
+	}
 
-    public int getPoints() {
-        return points;
-    }
+	public String getPoints() {
+		return points;
+	}
 
-    public void setPoints(int points) {
-        this.points = points;
-    }
+	public void setPoints(String points) {
+		this.points = points;
+	}
 
-    public int getActivationStatus() {
-        return activationStatus;
-    }
+	public String getActivationStatus() {
+		return activationStatus;
+	}
 
-    public void setActivationStatus(int activationStatus) {
-        this.activationStatus = activationStatus;
-    }
+	public void setActivationStatus(String activationStatus) {
+		this.activationStatus = activationStatus;
+	}
 
-    public Date getCreationDate() {
-        return creationDate;
-    }
+	public String getCreationDate() {
+		return creationDate;
+	}
 
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
-    }
+	public void setCreationDate(String creationDate) {
+		this.creationDate = creationDate;
+	}
 
-    public String getCreatedBy() {
-        return createdBy;
-    }
+	public String getCreatedBy() {
+		return createdBy;
+	}
 
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
 
-    public Date getModifiedDate() {
-        return modifiedDate;
-    }
+	public String getModifiedDate() {
+		return modifiedDate;
+	}
 
-    public void setModifiedDate(Date modifiedDate) {
-        this.modifiedDate = modifiedDate;
-    }
+	public void setModifiedDate(String modifiedDate) {
+		this.modifiedDate = modifiedDate;
+	}
 
-    public String getModifiedBy() {
-        return modifiedBy;
-    }
+	public String getModifiedBy() {
+		return modifiedBy;
+	}
 
-    public void setModifiedBy(String modifiedBy) {
-        this.modifiedBy = modifiedBy;
-    }
+	public void setModifiedBy(String modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
+
+	@Override
+	public String toString() {
+		return "QrMaster [id=" + id + ", productId=" + productId + ", batchId=" + batchId + ", numberOfQrGenerated="
+				+ numberOfQrGenerated + ", points=" + points + ", activationStatus=" + activationStatus
+				+ ", creationDate=" + creationDate + ", createdBy=" + createdBy + ", modifiedDate=" + modifiedDate
+				+ ", modifiedBy=" + modifiedBy + "]";
+	}
+
+   
 }

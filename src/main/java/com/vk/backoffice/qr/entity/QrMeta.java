@@ -27,22 +27,22 @@ public class QrMeta {
     private String batchId;
     
     @Column(name="numberOfQrGenerated")
-    private int numberOfQrGenerated;
+    private String numberOfQrGenerated;
     
     @Column(name="points")
-    private int points;
+    private String points;
     
     @Column(name="activationStatus")
-    private int activationStatus;
+    private String activationStatus;
     
     @Column(name="creationDate")
-    private Date creationDate;
+    private String creationDate;
     
     @Column(name="createdBy")
     private String createdBy;
     
     @Column(name="modifiedDate")
-    private Date modifiedDate;
+    private String modifiedDate;
     
     @Column(name="modifiedBy")
     private String modifiedBy;
@@ -71,35 +71,35 @@ public class QrMeta {
 		this.batchId = batchId;
 	}
 
-	public int getNumberOfQrGenerated() {
+	public String getNumberOfQrGenerated() {
 		return numberOfQrGenerated;
 	}
 
-	public void setNumberOfQrGenerated(int numberOfQrGenerated) {
+	public void setNumberOfQrGenerated(String numberOfQrGenerated) {
 		this.numberOfQrGenerated = numberOfQrGenerated;
 	}
 
-	public int getPoints() {
+	public String getPoints() {
 		return points;
 	}
 
-	public void setPoints(int points) {
+	public void setPoints(String points) {
 		this.points = points;
 	}
 
-	public int getActivationStatus() {
+	public String getActivationStatus() {
 		return activationStatus;
 	}
 
-	public void setActivationStatus(int activationStatus) {
+	public void setActivationStatus(String activationStatus) {
 		this.activationStatus = activationStatus;
 	}
 
-	public Date getCreationDate() {
+	public String getCreationDate() {
 		return creationDate;
 	}
 
-	public void setCreationDate(Date creationDate) {
+	public void setCreationDate(String creationDate) {
 		this.creationDate = creationDate;
 	}
 
@@ -111,11 +111,11 @@ public class QrMeta {
 		this.createdBy = createdBy;
 	}
 
-	public Date getModifiedDate() {
+	public String getModifiedDate() {
 		return modifiedDate;
 	}
 
-	public void setModifiedDate(Date modifiedDate) {
+	public void setModifiedDate(String modifiedDate) {
 		this.modifiedDate = modifiedDate;
 	}
 
@@ -134,6 +134,6 @@ public class QrMeta {
 				+ ", creationDate=" + creationDate + ", createdBy=" + createdBy + ", modifiedDate=" + modifiedDate
 				+ ", modifiedBy=" + modifiedBy + "]";
 	}
-    
-    
+
+	    
 }
