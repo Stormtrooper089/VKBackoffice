@@ -33,7 +33,7 @@ public class QrMeta {
     private String points;
     
     @Column(name="activationStatus")
-    private String activationStatus;
+    private int activationStatus;
     
     @Column(name="creationDate")
     private String creationDate;
@@ -87,11 +87,11 @@ public class QrMeta {
 		this.points = points;
 	}
 
-	public String getActivationStatus() {
+	public int getActivationStatus() {
 		return activationStatus;
 	}
 
-	public void setActivationStatus(String activationStatus) {
+	public void setActivationStatus(int activationStatus) {
 		this.activationStatus = activationStatus;
 	}
 

@@ -9,12 +9,11 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/api")
 public class QrController {
 
@@ -28,12 +27,6 @@ public class QrController {
             Resource resource = qrCodeService.generateCodeByProductToExcel(qrRequest);
             System.out.println("FileName "+ resource.getFilename());
             return new ResponseEntity<>(resource.getFilename(), HttpStatus.ACCEPTED);
-            /*if (resource != null) {
-                return ResponseEntity.ok()
-                        .contentType(MediaType.parseMediaType(MediaType.APPLICATION_OCTET_STREAM_VALUE))
-                        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-                        .body(resource);
-            }*/
         }
         return null;
     }
@@ -47,7 +40,7 @@ public class QrController {
                 .body(resource);
     }
 
-    @RequestMapping(path = "/getQrList", method = RequestMethod.GET)
+    @GetMapping(path = "/getQrList", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<QrMaster> getQrMasterList(){
         return qrCodeService.getQrMasterInformation();
     }

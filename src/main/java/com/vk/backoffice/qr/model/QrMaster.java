@@ -14,7 +14,7 @@ public class QrMaster {
 
     private String points;
 
-    private String activationStatus;
+    private int activationStatus;
 
     private String creationDate;
 
@@ -64,11 +64,11 @@ public class QrMaster {
 		this.points = points;
 	}
 
-	public String getActivationStatus() {
+	public int getActivationStatus() {
 		return activationStatus;
 	}
 
-	public void setActivationStatus(String activationStatus) {
+	public void setActivationStatus(int activationStatus) {
 		this.activationStatus = activationStatus;
 	}
 

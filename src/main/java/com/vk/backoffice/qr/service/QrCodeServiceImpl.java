@@ -14,6 +14,7 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.util.IOUtils;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -38,6 +39,7 @@ public class QrCodeServiceImpl {
     private final int QR_HEIGHT = 200;
 
     @Autowired
+    @Lazy
     private GeneratedQrMetaInfoRepo generatedQrMetaInfoRepo;
 
     public Resource generateCodeByProductToExcel(CreateQrRequest qrRequest){
@@ -141,27 +143,21 @@ public class QrCodeServiceImpl {
 
     public List<QrMaster> getQrMasterInformation(){
         List<QrMaster> qrMasters = new ArrayList<>();
-        
-       Optional<QrMeta> qrMeta =  generatedQrMetaInfoRepo.findById((long) 1);
-        
-        if(qrMeta.isPresent()) {
-        	
-        
-        	
-        		QrMaster qrMaster = new QrMaster();
-                qrMaster.setId(qrMeta.get().getId());
-                qrMaster.setBatchId(qrMeta.get().getBatchId());
-                qrMaster.setPoints(qrMeta.get().getPoints());
-                qrMaster.setActivationStatus(qrMeta.get().getActivationStatus());
-                qrMaster.setCreatedBy(qrMeta.get().getCreatedBy());
-                qrMaster.setCreationDate(qrMeta.get().getCreationDate());
-                qrMaster.setModifiedDate(qrMeta.get().getModifiedDate());
-                qrMaster.setModifiedBy(qrMeta.get().getModifiedBy());
-                qrMaster.setProductId(qrMeta.get().getProductId());
+        List<QrMeta> qrMetaList =  generatedQrMetaInfoRepo.findAll();
+            for (QrMeta qrMeta:qrMetaList) {
+                QrMaster qrMaster = new QrMaster();
+                qrMaster.setId(qrMeta.getId());
+                qrMaster.setBatchId(qrMeta.getBatchId());
+                qrMaster.setPoints(qrMeta.getPoints());
+                qrMaster.setActivationStatus(qrMeta.getActivationStatus());
+                qrMaster.setNumberOfQrGenerated(qrMeta.getNumberOfQrGenerated());
+                qrMaster.setCreatedBy(qrMeta.getCreatedBy());
+                qrMaster.setCreationDate(qrMeta.getCreationDate());
+                qrMaster.setModifiedDate(qrMeta.getModifiedDate());
+                qrMaster.setModifiedBy(qrMeta.getModifiedBy());
+                qrMaster.setProductId(qrMeta.getProductId());
                 qrMasters.add(qrMaster);
-           
-        
-        }
+            }
         return qrMasters;
     }
 }

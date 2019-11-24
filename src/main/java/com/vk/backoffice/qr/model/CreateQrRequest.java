@@ -5,7 +5,7 @@ public class CreateQrRequest {
     private String productId;
     private int numberOfQrCodeRequired;
     private int pointsForCode;
-    private String activationStatus;
+    private int activationStatus;
 
     public String getProductId() {
         return productId;
@@ -31,11 +31,11 @@ public class CreateQrRequest {
         this.pointsForCode = pointsForCode;
     }
 
-    public String getActivationStatus() {
+    public int getActivationStatus() {
         return activationStatus;
     }
 
-    public void setActivationStatus(String activationStatus) {
+    public void setActivationStatus(int activationStatus) {
         this.activationStatus = activationStatus;
     }
 
