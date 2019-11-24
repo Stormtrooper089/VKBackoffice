@@ -12,13 +12,13 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "qrgenerated")
+@Table(name = "qrMeta")
 public class QrMeta {
 	
     @Id
     @Column(name="id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
     
     @Column(name="productId")
     private String productId;
@@ -47,11 +47,11 @@ public class QrMeta {
     @Column(name="modifiedBy")
     private String modifiedBy;
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

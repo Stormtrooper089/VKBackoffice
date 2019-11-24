@@ -24,6 +24,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class QrCodeServiceImpl {
@@ -141,19 +142,25 @@ public class QrCodeServiceImpl {
     public List<QrMaster> getQrMasterInformation(){
         List<QrMaster> qrMasters = new ArrayList<>();
         QrMaster qrMaster = new QrMaster();
-        List<QrMeta> qrMetaList = generatedQrMetaInfoRepo.findAll();
-        for (QrMeta qrMeta:qrMetaList) {
-            qrMaster.setId(qrMeta.getId());
-            qrMaster.setBatchId(qrMeta.getBatchId());
-            qrMaster.setPoints(qrMeta.getPoints());
-            qrMaster.setActivationStatus(qrMeta.getActivationStatus());
-            qrMaster.setCreatedBy(qrMeta.getCreatedBy());
-            qrMaster.setCreationDate(qrMeta.getCreationDate());
-            qrMaster.setModifiedDate(qrMeta.getModifiedDate());
-            qrMaster.setModifiedBy(qrMeta.getModifiedBy());
-            qrMaster.setProductId(qrMeta.getProductId());
-            qrMasters.add(qrMaster);
-        }
+        List<QrMeta> qrMetaList = new ArrayList<QrMeta>();
+        		qrMetaList = generatedQrMetaInfoRepo.findAll();
+        
+        
+        	for (QrMeta qrMeta:qrMetaList) {
+        	
+                qrMaster.setId(qrMeta.getId());
+                qrMaster.setBatchId(qrMeta.getBatchId());
+                qrMaster.setPoints(qrMeta.getPoints());
+                qrMaster.setActivationStatus(qrMeta.getActivationStatus());
+                qrMaster.setCreatedBy(qrMeta.getCreatedBy());
+                qrMaster.setCreationDate(qrMeta.getCreationDate());
+                qrMaster.setModifiedDate(qrMeta.getModifiedDate());
+                qrMaster.setModifiedBy(qrMeta.getModifiedBy());
+                qrMaster.setProductId(qrMeta.getProductId());
+                qrMasters.add(qrMaster);
+            }
+        
+        
         return qrMasters;
     }
 }
