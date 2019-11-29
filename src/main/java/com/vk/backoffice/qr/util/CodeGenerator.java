@@ -35,7 +35,9 @@ public class CodeGenerator {
         BigInteger batchId= new BigInteger("111111111112");
         List<String> generatedCodeList = new ArrayList<>();
         QrMeta qrMeta=new QrMeta();
-        qrMeta.setActivationStatus(crRequest.getActivationStatus());
+        System.out.println("activation status"+crRequest.getActivationStatus());
+        qrMeta.setActivationStatus(crRequest.getActivationStatus().equalsIgnoreCase("true") ? 1 : 0);
+        System.out.println("activation status after "+qrMeta.getActivationStatus());
         qrMeta.setBatchId(batchId.toString());
         qrMeta.setNumberOfQrGenerated(crRequest.getNumberOfQrCodeRequired()+"");
         qrMeta.setPoints(crRequest.getPointsForCode()+"");

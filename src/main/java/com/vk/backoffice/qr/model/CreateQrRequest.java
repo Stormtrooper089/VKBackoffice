@@ -5,7 +5,7 @@ public class CreateQrRequest {
     private String productId;
     private int numberOfQrCodeRequired;
     private int pointsForCode;
-    private int activationStatus;
+    private String activationStatus;
 
     public String getProductId() {
         return productId;
@@ -31,11 +31,11 @@ public class CreateQrRequest {
         this.pointsForCode = pointsForCode;
     }
 
-    public int getActivationStatus() {
+    public String getActivationStatus() {
         return activationStatus;
     }
 
-    public void setActivationStatus(int activationStatus) {
+    public void setActivationStatus(String activationStatus) {
         this.activationStatus = activationStatus;
     }
 
@@ -45,7 +45,7 @@ public class CreateQrRequest {
                 "productId='" + productId + '\'' +
                 ", numberOfQrCodeRequired=" + numberOfQrCodeRequired +
                 ", pointsForCode=" + pointsForCode +
-                ", activationStatus=" + activationStatus +
+                ", activationStatus='" + activationStatus +'\''+
                 '}';
     }
 }

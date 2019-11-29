@@ -30,7 +30,7 @@ public class QrController {
             Resource resource = qrCodeService.generateCodeByProductToExcel(qrRequest);
             if(resource != null) {
                 System.out.println("FileName " + resource.getFilename());
-                return new ResponseEntity<>(resource.getFilename().split(".")[0], HttpStatus.OK);
+                return new ResponseEntity<>(resource.getFilename(), HttpStatus.OK);
             }
         }
         return null;
