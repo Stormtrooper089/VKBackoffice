@@ -44,7 +44,6 @@ public class QrCodeServiceImpl {
 
     public Resource generateCodeByProductToExcel(CreateQrRequest qrRequest){
 
-        if(qrRequest != null) {
             if(qrRequest.getProductId() != null) {
                 String productId= qrRequest.getProductId();
                 String qrCodeImageFileName= "qrcode_"+productId+"."+IMAGE_FORMAT;
@@ -114,7 +113,6 @@ public class QrCodeServiceImpl {
                     //document.close();
                 }
             }
-        }
         return null;
     }
 

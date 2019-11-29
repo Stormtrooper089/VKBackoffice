@@ -3,6 +3,8 @@ package com.vk.backoffice.controller;
 import com.vk.backoffice.qr.model.CreateQrRequest;
 import com.vk.backoffice.qr.model.QrMaster;
 import com.vk.backoffice.qr.service.QrCodeServiceImpl;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/api")
 public class QrController {
@@ -25,8 +28,10 @@ public class QrController {
         System.out.println(qrRequest.toString());
         if(qrRequest != null) {
             Resource resource = qrCodeService.generateCodeByProductToExcel(qrRequest);
-            System.out.println("FileName "+ resource.getFilename());
-            return new ResponseEntity<>(resource.getFilename(), HttpStatus.ACCEPTED);
+            if(resource != null) {
+                System.out.println("FileName " + resource.getFilename());
+                return new ResponseEntity<>(resource.getFilename().split(".")[0], HttpStatus.OK);
+            }
         }
         return null;
     }
