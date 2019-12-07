@@ -52,8 +52,9 @@ public class QrCodeServiceImpl {
             Sheet sheet = workbook.createSheet(productId);
 
             try {
-                int excelRow = 0;
+
                 List<String> generatedCodeList = codeGenerator.generateCodes(qrRequest);
+                int excelRow = 1;
                 int codeIndex = 0;
                 while (codeIndex < generatedCodeList.size()) {
                     int topRow = excelRow++;
@@ -63,8 +64,8 @@ public class QrCodeServiceImpl {
                     Row firstRow = sheet.createRow(topRow);
                     Row thirdRow = sheet.createRow(bottomRow);
 
-                    for (int column = 0; column < 3; column++) {
-                        codeIndex = codeIndex + column;
+                    for (int column = 1; column < 4; column++) {
+                        codeIndex = codeIndex + (column-1);
                         if (codeIndex < generatedCodeList.size()) {
 
                             //GENERATE PRODUCT NAME ROW
@@ -96,7 +97,7 @@ public class QrCodeServiceImpl {
                             bottomCell.setCellValue("* " + generatedCodeList.get(codeIndex) + " *");
                         }
                     }
-                   
+
                 }
 
 
