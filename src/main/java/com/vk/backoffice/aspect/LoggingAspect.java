@@ -36,12 +36,12 @@ public class LoggingAspect {
                 joinPoint.getSignature().getDeclaringType() , joinPoint.getSignature().getName(), exception);
     }*/
 
-    @Around("@annotation(com.vk.backoffice.aspect.TrackTime)")
+    /*@Around("@annotation(com.vk.backoffice.aspect.TrackTime)")
     public void around(ProceedingJoinPoint joinPoint) throws Throwable {
         Long startTime = System.currentTimeMillis();
         joinPoint.proceed();
         Long timeTaken = System.currentTimeMillis() - startTime;
         logger.info(">>> {}:  Time taken by {} is {} "
                 ,joinPoint.getSignature().getDeclaringType() , joinPoint.getSignature().getName(), timeTaken);
-    }
+    }*/
 }
