@@ -32,9 +32,12 @@ public class RedemptionController {
     private List<RVRedemptionRequest> getRedeemRequestListFromDatabase() {
         List<RVRedemptionRequest> redemptionlist = new ArrayList<RVRedemptionRequest>();
         redemptionlist = redemptionRequestRepository.findAll();
+        log.info("redemptionList - "+redemptionlist.size());
         List<RVRedemptionRequest> listAfterFilters = redemptionlist.stream()
                 .filter(e -> e.getRedeemStatus().equalsIgnoreCase("Pending"))
                 .collect(Collectors.toList());
+
+        log.info("redemptionList AFTER FILTER- "+listAfterFilters.size());
         return listAfterFilters;
     }
 
@@ -46,6 +49,7 @@ public class RedemptionController {
             log.info(qrRequest.toString());
             RVRedemptionRequest redemptionRequest = redemptionRequestRepository.findById(qrRequest.getId()).orElse(new RVRedemptionRequest());
             redemptionRequest.setRedeemStatus(qrRequest.getRedeemStatus());
+            redemptionRequestRepository.save(redemptionRequest);
             return "success";
         }
         catch (Exception e){
