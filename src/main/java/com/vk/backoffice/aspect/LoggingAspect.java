@@ -24,7 +24,7 @@ public class LoggingAspect {
                 joinPoint.getSignature().getDeclaringType() ,joinPoint.getSignature().getName(), result);
     }*/
 
-    @After("com.vk.backoffice.aspect.CommonJoinPointConfig.controllerLayerExecution()")
+  /*  @After("com.vk.backoffice.aspect.CommonJoinPointConfig.controllerLayerExecution()")
     public void after(JoinPoint joinPoint) {
         logger.info(">>> {}: {} method exited . .",
                 joinPoint.getSignature().getDeclaringType() , joinPoint.getSignature().getName());
@@ -34,14 +34,14 @@ public class LoggingAspect {
     public void afterThrowing(JoinPoint joinPoint, Object exception) {
         logger.error(">>> {}: {} method throws an exception {}",
                 joinPoint.getSignature().getDeclaringType() , joinPoint.getSignature().getName(), exception);
-    }
+    }*/
 
-    @Around("@annotation(com.vk.backoffice.aspect.TrackTime)")
+  /*  @Around("@annotation(com.vk.backoffice.aspect.TrackTime)")
     public void around(ProceedingJoinPoint joinPoint) throws Throwable {
         Long startTime = System.currentTimeMillis();
         joinPoint.proceed();
         Long timeTaken = System.currentTimeMillis() - startTime;
         logger.info(">>> {}:  Time taken by {} is {} "
                 ,joinPoint.getSignature().getDeclaringType() , joinPoint.getSignature().getName(), timeTaken);
-    }
+    }*/
 }
