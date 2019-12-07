@@ -44,16 +44,16 @@ public class RedemptionController {
 
     @TrackTime
     @PostMapping(path = "/postRedeemRequests")
-    public String updateRedemptionRequest(@RequestBody RVRedemptionRequest qrRequest) {
+    public List<RVRedemptionRequest> updateRedemptionRequest(@RequestBody RVRedemptionRequest qrRequest) {
         try {
             log.info(qrRequest.toString());
             RVRedemptionRequest redemptionRequest = redemptionRequestRepository.findById(qrRequest.getId()).orElse(new RVRedemptionRequest());
             redemptionRequest.setRedeemStatus(qrRequest.getRedeemStatus());
             redemptionRequestRepository.save(redemptionRequest);
-            return "success";
+            return getRedeemRequestListFromDatabase();
         }
         catch (Exception e){
-            return "failure";
+            return null;
         }
     }
 }
