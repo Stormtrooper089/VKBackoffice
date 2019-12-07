@@ -18,30 +18,32 @@ public class LoggingAspect {
                 joinPoint.getSignature().getDeclaringType() ,joinPoint.getSignature());
     }
 
-    /*@AfterReturning(value = "com.vk.backoffice.aspect.CommonJoinPointConfig.controllerLayerExecution()", returning = "result")
-    public void afterReturning(JoinPoint joinPoint, Object result) {
+    @AfterReturning(value = "com.vk.backoffice.aspect.CommonJoinPointConfig.controllerLayerExecution()", returning = "result")
+    public Object afterReturning(JoinPoint joinPoint, Object result) {
         logger.info(">>> {}:  {} returned with value {}",
                 joinPoint.getSignature().getDeclaringType() ,joinPoint.getSignature().getName(), result);
-    }*/
+        return result;
+    }
 
-  /*  @After("com.vk.backoffice.aspect.CommonJoinPointConfig.controllerLayerExecution()")
+    @After("com.vk.backoffice.aspect.CommonJoinPointConfig.controllerLayerExecution()")
     public void after(JoinPoint joinPoint) {
         logger.info(">>> {}: {} method exited . .",
                 joinPoint.getSignature().getDeclaringType() , joinPoint.getSignature().getName());
     }
-
+/*
     @AfterThrowing(value = "com.vk.backoffice.aspect.CommonJoinPointConfig.controllerLayerExecution()", throwing = "exception")
     public void afterThrowing(JoinPoint joinPoint, Object exception) {
         logger.error(">>> {}: {} method throws an exception {}",
                 joinPoint.getSignature().getDeclaringType() , joinPoint.getSignature().getName(), exception);
     }*/
 
-    /*@Around("@annotation(com.vk.backoffice.aspect.TrackTime)")
-    public void around(ProceedingJoinPoint joinPoint) throws Throwable {
+    @Around("@annotation(com.vk.backoffice.aspect.TrackTime)")
+    public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
         Long startTime = System.currentTimeMillis();
-        joinPoint.proceed();
+        Object ret = joinPoint.proceed();
         Long timeTaken = System.currentTimeMillis() - startTime;
         logger.info(">>> {}:  Time taken by {} is {} "
                 ,joinPoint.getSignature().getDeclaringType() , joinPoint.getSignature().getName(), timeTaken);
-    }*/
+        return ret;
+    }
 }
