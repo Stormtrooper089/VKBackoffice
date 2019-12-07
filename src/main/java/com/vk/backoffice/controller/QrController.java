@@ -1,5 +1,6 @@
 package com.vk.backoffice.controller;
 
+import com.vk.backoffice.aspect.TrackTime;
 import com.vk.backoffice.qr.model.CreateQrRequest;
 import com.vk.backoffice.qr.model.QrMaster;
 import com.vk.backoffice.qr.service.QrCodeServiceImpl;
@@ -23,6 +24,7 @@ public class QrController {
     @Autowired
     private QrCodeServiceImpl qrCodeService;
 
+    @TrackTime
     @PostMapping(path = "/generateQRExcel")
     public ResponseEntity<String> printQrForExcel(@RequestBody CreateQrRequest qrRequest) {
         System.out.println(qrRequest.toString());
@@ -36,6 +38,7 @@ public class QrController {
         return null;
     }
 
+    @TrackTime
     @RequestMapping(path = "/downloadExcel/{fileName}", method = RequestMethod.GET)
     public ResponseEntity downloadFile(@PathVariable(name = "fileName" , required = true) String fileName){
         Resource resource = qrCodeService.createResource(fileName+".xlsx");
@@ -45,6 +48,7 @@ public class QrController {
                 .body(resource);
     }
 
+    @TrackTime
     @GetMapping(path = "/getQrList", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<QrMaster> getQrMasterList(){
         return qrCodeService.getQrMasterInformation();

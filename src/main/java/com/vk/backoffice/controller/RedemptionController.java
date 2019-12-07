@@ -1,27 +1,19 @@
 package com.vk.backoffice.controller;
 
+import com.vk.backoffice.aspect.TrackTime;
+import com.vk.backoffice.qr.entity.RVRedemptionRequest;
+import com.vk.backoffice.qr.repository.RedemptionRequestRepository;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collector;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.vk.backoffice.qr.entity.RVRedemptionRequest;
-import com.vk.backoffice.qr.model.CreateQrRequest;
-import com.vk.backoffice.qr.repository.RedemptionRequestRepository;
-
 import java.util.stream.Collectors;
 
+@Slf4j
 @RestController
 @RequestMapping("/api")
 public class RedemptionController {
@@ -29,6 +21,9 @@ public class RedemptionController {
     @Autowired
     private RedemptionRequestRepository redemptionRequestRepository;
 
+    Logger log = LoggerFactory.getLogger(RedemptionController.class);
+
+    @TrackTime
     @GetMapping("/redeemRequests")
     public List<RVRedemptionRequest> getTransactions() {
         return getRedeemRequestListFromDatabase();
@@ -44,9 +39,11 @@ public class RedemptionController {
     }
 
 
+    @TrackTime
     @PostMapping(path = "/postRedeemRequests")
     public String updateRedemptionRequest(@RequestBody RVRedemptionRequest qrRequest) {
         try {
+            log.info(qrRequest.toString());
             RVRedemptionRequest redemptionRequest = redemptionRequestRepository.findById(qrRequest.getId()).orElse(new RVRedemptionRequest());
             redemptionRequest.setRedeemStatus(qrRequest.getRedeemStatus());
             return "success";
