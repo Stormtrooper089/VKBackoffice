@@ -57,21 +57,17 @@ public class QrCodeServiceImpl {
                 int excelRow = 1;
                 int codeIndex = 0;
                 while (codeIndex < generatedCodeList.size()) {
-                    int topRow = excelRow++;
+                    Row firstRow = sheet.createRow(excelRow++);
                     int middleRow = excelRow++;
-                    int bottomRow = excelRow++;
-
-                    Row firstRow = sheet.createRow(topRow);
-                    Row thirdRow = sheet.createRow(bottomRow);
-
+                    Row thirdRow = sheet.createRow(excelRow++);
+                    int prevCodeIndex = codeIndex;
                     for (int column = 1; column < 4; column++) {
-                        codeIndex = codeIndex + (column-1);
+                        codeIndex = prevCodeIndex + (column-1);
                         if (codeIndex < generatedCodeList.size()) {
 
                             //GENERATE PRODUCT NAME ROW
                             Cell topCell = firstRow.createCell(column);
                             topCell.setCellValue(productId);
-
 
                             generateQrCodeImage(generatedCodeList.get(codeIndex), qrCodeImageFileName);
                             //READ IMAGE
@@ -97,7 +93,7 @@ public class QrCodeServiceImpl {
                             bottomCell.setCellValue("* " + generatedCodeList.get(codeIndex) + " *");
                         }
                     }
-
+                    codeIndex++;
                 }
 
 
