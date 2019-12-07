@@ -56,22 +56,15 @@ public class QrCodeServiceImpl {
                 int excelRow = 0;
                 List<String> generatedCodeList = codeGenerator.generateCodes(qrRequest);
                 int codeIndex = 0;
-                for (codeIndex = 0; codeIndex < generatedCodeList.size(); codeIndex++) {
+                while(codeIndex < generatedCodeList.size()) {
 //                    for (String generatedCode : generatedCodeList) {
                     int topRow =excelRow++;
                     int middleRow = excelRow++;
                     int bottomRow = excelRow ++;
 
-                    /*for (int column = 0; column < 3; column++) {
-                        //GENERATE PRODUCT NAME ROW
-                        Cell newCell = newRow.createCell(column);
-                        newCell.setCellValue(productId);
-                    }*/
-
-                   // excelRow++;
                     for (int column = 0; column < 3; column++) {
                         codeIndex = codeIndex + column;
-                        if (codeIndex > generatedCodeList.size()) {
+                        if (codeIndex < generatedCodeList.size()) {
 
                             //GENERATE PRODUCT NAME ROW
                             Row newRow = sheet.createRow(topRow);
