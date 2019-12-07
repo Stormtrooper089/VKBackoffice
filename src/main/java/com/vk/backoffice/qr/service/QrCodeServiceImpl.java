@@ -25,7 +25,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class QrCodeServiceImpl {
@@ -56,23 +55,24 @@ public class QrCodeServiceImpl {
                 int excelRow = 0;
                 List<String> generatedCodeList = codeGenerator.generateCodes(qrRequest);
                 int codeIndex = 0;
-                while(codeIndex < generatedCodeList.size()) {
-//                    for (String generatedCode : generatedCodeList) {
-                    int topRow =excelRow++;
+                while (codeIndex < generatedCodeList.size()) {
+                    int topRow = excelRow++;
                     int middleRow = excelRow++;
-                    int bottomRow = excelRow ++;
+                    int bottomRow = excelRow++;
+
+                    Row firstRow = sheet.createRow(topRow);
+                    Row thirdRow = sheet.createRow(bottomRow);
 
                     for (int column = 0; column < 3; column++) {
                         codeIndex = codeIndex + column;
                         if (codeIndex < generatedCodeList.size()) {
 
                             //GENERATE PRODUCT NAME ROW
-                            Row newRow = sheet.createRow(topRow);
-                            Cell topCell = newRow.createCell(column);
+                            Cell topCell = firstRow.createCell(column);
                             topCell.setCellValue(productId);
 
-                            generateQrCodeImage(generatedCodeList.get(codeIndex), qrCodeImageFileName);
 
+                            generateQrCodeImage(generatedCodeList.get(codeIndex), qrCodeImageFileName);
                             //READ IMAGE
                             InputStream inputStream = new FileInputStream(qrCodeImageFileName);
                             byte[] imageBytes = IOUtils.toByteArray(inputStream);
@@ -92,8 +92,7 @@ public class QrCodeServiceImpl {
 
 
                             //GENERATE QR CODE NAME ROW
-                            newRow = sheet.createRow(bottomRow);
-                            Cell bottomCell = newRow.createCell(column);
+                            Cell bottomCell = thirdRow.createCell(column);
                             bottomCell.setCellValue("* " + generatedCodeList.get(codeIndex) + " *");
                         }
                     }
