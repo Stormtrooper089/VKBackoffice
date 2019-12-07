@@ -96,13 +96,7 @@ public class QrCodeServiceImpl {
                             bottomCell.setCellValue("* " + generatedCodeList.get(codeIndex) + " *");
                         }
                     }
-                   /* excelRow++;
-                    newRow = sheet.createRow(excelRow);
-                    for (int column = 0; column < 3; column++) {
-                        //GENERATE QR CODE NAME ROW
-                        Cell newCell = newRow.createCell(column);
-                        newCell.setCellValue("* " + generatedCodeList.get(codeIndex) + " *");
-                    }*/
+                   
                 }
 
 
