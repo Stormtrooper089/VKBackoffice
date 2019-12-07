@@ -18,11 +18,11 @@ public class LoggingAspect {
                 joinPoint.getSignature().getDeclaringType() ,joinPoint.getSignature());
     }
 
-    @AfterReturning(value = "com.vk.backoffice.aspect.CommonJoinPointConfig.controllerLayerExecution()", returning = "result")
+    /*@AfterReturning(value = "com.vk.backoffice.aspect.CommonJoinPointConfig.controllerLayerExecution()", returning = "result")
     public void afterReturning(JoinPoint joinPoint, Object result) {
         logger.info(">>> {}:  {} returned with value {}",
                 joinPoint.getSignature().getDeclaringType() ,joinPoint.getSignature().getName(), result);
-    }
+    }*/
 
     @After("com.vk.backoffice.aspect.CommonJoinPointConfig.controllerLayerExecution()")
     public void after(JoinPoint joinPoint) {
