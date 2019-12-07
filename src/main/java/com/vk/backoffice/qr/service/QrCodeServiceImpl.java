@@ -34,7 +34,7 @@ public class QrCodeServiceImpl {
     @Autowired
     private CodeGenerator codeGenerator;
 
-    private final String IMAGE_FORMAT="png";
+    private final String IMAGE_FORMAT = "png";
     private final int QR_WIDTH = 200;
     private final int QR_HEIGHT = 200;
 
@@ -42,33 +42,43 @@ public class QrCodeServiceImpl {
     @Lazy
     private GeneratedQrMetaInfoRepo generatedQrMetaInfoRepo;
 
-    public Resource generateCodeByProductToExcel(CreateQrRequest qrRequest){
+    public Resource generateCodeByProductToExcel(CreateQrRequest qrRequest) {
 
-            if(qrRequest.getProductId() != null) {
-                String productId= qrRequest.getProductId();
-                String qrCodeImageFileName= "qrcode_"+productId+"."+IMAGE_FORMAT;
-                String outputExcelFileName= "Excel"+productId+".xlsx";
+        if (qrRequest.getProductId() != null) {
+            String productId = qrRequest.getProductId();
+            String qrCodeImageFileName = "qrcode_" + productId + "." + IMAGE_FORMAT;
+            String outputExcelFileName = "Excel" + productId + ".xlsx";
 
-                Workbook workbook = new XSSFWorkbook();
-                Sheet sheet = workbook.createSheet(productId);
+            Workbook workbook = new XSSFWorkbook();
+            Sheet sheet = workbook.createSheet(productId);
 
-                try {
-                    int excelRow = 0;
-                    List<String> generatedCodeList = codeGenerator.generateCodes(qrRequest);
-                    for (String generatedCode : generatedCodeList) {
+            try {
+                int excelRow = 0;
+                List<String> generatedCodeList = codeGenerator.generateCodes(qrRequest);
+                int codeIndex = 0;
+                for (codeIndex = 0; codeIndex < generatedCodeList.size(); codeIndex++) {
+//                    for (String generatedCode : generatedCodeList) {
+                    int topRow =excelRow++;
+                    int middleRow = excelRow++;
+                    int bottomRow = excelRow ++;
 
-                        excelRow++;
-                        Row newRow = sheet.createRow(excelRow);
-                        for (int column = 0; column < 3; column++) {
+                    /*for (int column = 0; column < 3; column++) {
+                        //GENERATE PRODUCT NAME ROW
+                        Cell newCell = newRow.createCell(column);
+                        newCell.setCellValue(productId);
+                    }*/
+
+                   // excelRow++;
+                    for (int column = 0; column < 3; column++) {
+                        codeIndex = codeIndex + column;
+                        if (codeIndex > generatedCodeList.size()) {
+
                             //GENERATE PRODUCT NAME ROW
-                            Cell newCell = newRow.createCell(column);
-                            newCell.setCellValue(productId);
-                        }
+                            Row newRow = sheet.createRow(topRow);
+                            Cell topCell = newRow.createCell(column);
+                            topCell.setCellValue(productId);
 
-                        excelRow++;
-                        for (int column = 0; column < 3; column++) {
-
-                           generateQrCodeImage(generatedCode,qrCodeImageFileName);
+                            generateQrCodeImage(generatedCodeList.get(codeIndex), qrCodeImageFileName);
 
                             //READ IMAGE
                             InputStream inputStream = new FileInputStream(qrCodeImageFileName);
@@ -81,81 +91,87 @@ public class QrCodeServiceImpl {
                             Drawing drawing = sheet.createDrawingPatriarch();
                             ClientAnchor anchor = helper.createClientAnchor();
                             anchor.setCol1(column);
-                            anchor.setRow1(excelRow);
+                            anchor.setRow1(middleRow);
 
                             //DRAW PICTURE
                             Picture pict = drawing.createPicture(anchor, pictureIds);
                             pict.resize();
 
-                        }
-                        excelRow++;
-                        newRow = sheet.createRow(excelRow);
-                        for (int column = 0; column < 3; column++) {
+
                             //GENERATE QR CODE NAME ROW
-                            Cell newCell = newRow.createCell(column);
-                            newCell.setCellValue("* " + generatedCode + " *");
+                            newRow = sheet.createRow(bottomRow);
+                            Cell bottomCell = newRow.createCell(column);
+                            bottomCell.setCellValue("* " + generatedCodeList.get(codeIndex) + " *");
                         }
                     }
-
-
-                    FileOutputStream fileOut = new FileOutputStream(outputExcelFileName);
-                    workbook.write(fileOut);
-                    fileOut.close();
-
-                    return createResource(outputExcelFileName);
-                }catch (IOException e) {
-                    System.out.print(e + "");
-                    return null;
-                }catch (Exception e) {
-                    System.out.print(e + "");
-                    return null;
-                } finally {
-                    //document.close();
+                   /* excelRow++;
+                    newRow = sheet.createRow(excelRow);
+                    for (int column = 0; column < 3; column++) {
+                        //GENERATE QR CODE NAME ROW
+                        Cell newCell = newRow.createCell(column);
+                        newCell.setCellValue("* " + generatedCodeList.get(codeIndex) + " *");
+                    }*/
                 }
+
+
+                FileOutputStream fileOut = new FileOutputStream(outputExcelFileName);
+                workbook.write(fileOut);
+                fileOut.close();
+
+                return createResource(outputExcelFileName);
+            } catch (IOException e) {
+                System.out.print(e + "");
+                return null;
+            } catch (Exception e) {
+                System.out.print(e + "");
+                return null;
+            } finally {
+                //document.close();
             }
+        }
         return null;
     }
 
-    private void generateQrCodeImage(String generatedCode,String qrCodeImageFileName){
+    private void generateQrCodeImage(String generatedCode, String qrCodeImageFileName) {
         //GENERATE QR CODE
         try {
             BitMatrix bitMatrix = new QRCodeWriter().encode(generatedCode, BarcodeFormat.QR_CODE, QR_WIDTH, QR_HEIGHT);
             MatrixToImageWriter.writeToStream(bitMatrix, IMAGE_FORMAT, new FileOutputStream(new File(qrCodeImageFileName)));
         } catch (WriterException e) {
             e.printStackTrace();
-        }catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public Resource createResource(String outputFileName){
+    public Resource createResource(String outputFileName) {
         try {
             Path path = Paths.get(outputFileName);
             Resource resource = new UrlResource(path.toUri());
             return resource;
-        }catch (MalformedURLException e) {
+        } catch (MalformedURLException e) {
             System.out.print(e + "");
             return null;
         }
     }
 
-    public List<QrMaster> getQrMasterInformation(){
+    public List<QrMaster> getQrMasterInformation() {
         List<QrMaster> qrMasters = new ArrayList<>();
-        List<QrMeta> qrMetaList =  generatedQrMetaInfoRepo.findAll();
-            for (QrMeta qrMeta:qrMetaList) {
-                QrMaster qrMaster = new QrMaster();
-                qrMaster.setId(qrMeta.getId());
-                qrMaster.setBatchId(qrMeta.getBatchId());
-                qrMaster.setPoints(qrMeta.getPoints());
-                qrMaster.setActivationStatus(qrMeta.getActivationStatus());
-                qrMaster.setNumberOfQrGenerated(qrMeta.getNumberOfQrGenerated());
-                qrMaster.setCreatedBy(qrMeta.getCreatedBy());
-                qrMaster.setCreationDate(qrMeta.getCreationDate());
-                qrMaster.setModifiedDate(qrMeta.getModifiedDate());
-                qrMaster.setModifiedBy(qrMeta.getModifiedBy());
-                qrMaster.setProductId(qrMeta.getProductId());
-                qrMasters.add(qrMaster);
-            }
+        List<QrMeta> qrMetaList = generatedQrMetaInfoRepo.findAll();
+        for (QrMeta qrMeta : qrMetaList) {
+            QrMaster qrMaster = new QrMaster();
+            qrMaster.setId(qrMeta.getId());
+            qrMaster.setBatchId(qrMeta.getBatchId());
+            qrMaster.setPoints(qrMeta.getPoints());
+            qrMaster.setActivationStatus(qrMeta.getActivationStatus());
+            qrMaster.setNumberOfQrGenerated(qrMeta.getNumberOfQrGenerated());
+            qrMaster.setCreatedBy(qrMeta.getCreatedBy());
+            qrMaster.setCreationDate(qrMeta.getCreationDate());
+            qrMaster.setModifiedDate(qrMeta.getModifiedDate());
+            qrMaster.setModifiedBy(qrMeta.getModifiedBy());
+            qrMaster.setProductId(qrMeta.getProductId());
+            qrMasters.add(qrMaster);
+        }
         return qrMasters;
     }
 }
