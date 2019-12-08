@@ -3,9 +3,10 @@ package com.vk.backoffice.controller;
 import com.vk.backoffice.aspect.TrackTime;
 import com.vk.backoffice.qr.model.CreateQrRequest;
 import com.vk.backoffice.qr.model.QrMaster;
+import com.vk.backoffice.qr.model.Statistic;
+import com.vk.backoffice.qr.service.DashboardServiceImpl;
 import com.vk.backoffice.qr.service.QrCodeServiceImpl;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -24,13 +25,16 @@ public class QrController {
     @Autowired
     private QrCodeServiceImpl qrCodeService;
 
+    @Autowired
+    private DashboardServiceImpl dashboardService;
+
     @TrackTime
     @PostMapping(path = "/generateQRExcel")
     public ResponseEntity<String> printQrForExcel(@RequestBody CreateQrRequest qrRequest) {
         System.out.println(qrRequest.toString());
-        if(qrRequest != null) {
+        if (qrRequest != null) {
             Resource resource = qrCodeService.generateCodeByProductToExcel(qrRequest);
-            if(resource != null) {
+            if (resource != null) {
                 System.out.println("FileName " + resource.getFilename());
                 return new ResponseEntity<>(resource.getFilename(), HttpStatus.OK);
             }
@@ -40,8 +44,8 @@ public class QrController {
 
     @TrackTime
     @RequestMapping(path = "/downloadExcel/{fileName}", method = RequestMethod.GET)
-    public ResponseEntity downloadFile(@PathVariable(name = "fileName" , required = true) String fileName){
-        Resource resource = qrCodeService.createResource(fileName+".xlsx");
+    public ResponseEntity downloadFile(@PathVariable(name = "fileName", required = true) String fileName) {
+        Resource resource = qrCodeService.createResource(fileName + ".xlsx");
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(MediaType.APPLICATION_OCTET_STREAM_VALUE))
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
@@ -50,7 +54,12 @@ public class QrController {
 
     @TrackTime
     @GetMapping(path = "/getQrList", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<QrMaster> getQrMasterList(){
+    public List<QrMaster> getQrMasterList() {
         return qrCodeService.getQrMasterInformation();
+    }
+
+    @GetMapping(path = "/qrStats/{statType}")
+    public List<Statistic> getQrStats(@PathVariable String statType) {
+        return dashboardService.getQrGenerationStats(statType);
     }
 }
