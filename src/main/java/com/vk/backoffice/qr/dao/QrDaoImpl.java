@@ -36,7 +36,7 @@ public class QrDaoImpl {
     public List<Object[]> getGeneratedQrStatisticsByMonth(String queryType) {
         try {
             String queryString = new String();
-            if (queryString.equals("qr")) {
+            if (queryType.equals("qr")) {
                 queryString = getQrStatQuery();
             } else {
                 queryString = getRedeemStatQuery();
