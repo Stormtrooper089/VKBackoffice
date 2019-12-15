@@ -39,7 +39,6 @@ public class ProductController {
                 productList.add(product);
                 logger.info(product.toString());
             }
-
             return productService.processProductMaster(productList);
         }catch (Exception e){
             return "failure";
