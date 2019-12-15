@@ -22,7 +22,7 @@ public class ProductServiceImpl {
                 for (Product product : productList) {
                     ProductMaster master = new ProductMaster();
                     master.setItemCode(product.getItemCode());
-                    master.setRange(product.getRange());
+                    master.setItemrange(product.getRange());
                     master.setProductName(product.getProductName());
                     productMasterList.add(master);
                 }

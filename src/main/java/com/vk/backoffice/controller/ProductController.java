@@ -6,6 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,7 +25,7 @@ public class ProductController {
 
     @PostMapping("/upload/productMaster")
     public String uploadProductMaster(@RequestParam("file") MultipartFile excelDataFile){
-
+        Logger logger = LoggerFactory.getLogger(ProductController.class);
         try {
             XSSFWorkbook workBook = new XSSFWorkbook(excelDataFile.getInputStream());
             XSSFSheet workSheet = workBook.getSheetAt(0);
@@ -35,7 +37,9 @@ public class ProductController {
                 product.setRange(xslRow.getCell(2).getStringCellValue());
                 product.setProductName(xslRow.getCell(3).getStringCellValue());
                 productList.add(product);
+                logger.info(product.toString());
             }
+
             return productService.processProductMaster(productList);
         }catch (Exception e){
             return "failure";

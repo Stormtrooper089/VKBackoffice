@@ -11,8 +11,8 @@ public class ProductMaster {
     private Long id;
     @Column(name = "itemcode")
     private String itemCode;
-    @Column(name = "range")
-    private String range;
+    @Column(name = "itemrange")
+    private String itemrange;
     @Column(name = "productname")
     private String productName;
 
@@ -32,12 +32,12 @@ public class ProductMaster {
         this.itemCode = itemCode;
     }
 
-    public String getRange() {
-        return range;
+    public String getItemrange() {
+        return itemrange;
     }
 
-    public void setRange(String range) {
-        this.range = range;
+    public void setItemrange(String itemrange) {
+        this.itemrange = itemrange;
     }
 
     public String getProductName() {
