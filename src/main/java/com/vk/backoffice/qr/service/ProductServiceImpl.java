@@ -34,4 +34,17 @@ public class ProductServiceImpl {
         }
         return "failure";
     }
+	
+	public List<Product> getProductList(){
+		List<Product> productList = new ArrayList<>();
+		List<ProductMaster> productBOList = productRepository.findAll();
+		for(ProductMaster master: productBOList){
+			Product product =new Product();
+			product.setProductName(master.getProductName());
+			product.setRange(master.getItemrange());
+			product.setItemCode(master.getItemCode());
+			productList.add(product);
+		}
+		return productList;
+	}
 }

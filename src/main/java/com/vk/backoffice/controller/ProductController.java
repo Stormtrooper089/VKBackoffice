@@ -44,4 +44,9 @@ public class ProductController {
             return "failure";
         }
     }
+	
+	@GetMapping("/getProductList")
+	public List<Product> getProductList(){
+		return productService.getProductList();
+	}
 }
