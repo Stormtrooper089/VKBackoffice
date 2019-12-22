@@ -52,25 +52,22 @@ public class QrCodeServiceImpl {
             Sheet sheet = workbook.createSheet(productId);
 
             try {
-                int excelRow = 0;
+
                 List<String> generatedCodeList = codeGenerator.generateCodes(qrRequest);
+                int excelRow = 1;
                 int codeIndex = 0;
                 while (codeIndex < generatedCodeList.size()) {
-                    int topRow = excelRow++;
+                    Row firstRow = sheet.createRow(excelRow++);
                     int middleRow = excelRow++;
-                    int bottomRow = excelRow++;
-
-                    Row firstRow = sheet.createRow(topRow);
-                    Row thirdRow = sheet.createRow(bottomRow);
-
-                    for (int column = 0; column < 3; column++) {
-                        codeIndex = codeIndex + column;
+                    Row thirdRow = sheet.createRow(excelRow++);
+                    int prevCodeIndex = codeIndex;
+                    for (int column = 1; column < 4; column++) {
+                        codeIndex = prevCodeIndex + (column-1);
                         if (codeIndex < generatedCodeList.size()) {
 
                             //GENERATE PRODUCT NAME ROW
                             Cell topCell = firstRow.createCell(column);
                             topCell.setCellValue(productId);
-
 
                             generateQrCodeImage(generatedCodeList.get(codeIndex), qrCodeImageFileName);
                             //READ IMAGE
@@ -96,7 +93,7 @@ public class QrCodeServiceImpl {
                             bottomCell.setCellValue("* " + generatedCodeList.get(codeIndex) + " *");
                         }
                     }
-                   
+                    codeIndex++;
                 }
 
 
