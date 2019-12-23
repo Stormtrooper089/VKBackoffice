@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,6 +50,8 @@ public class RedemptionController {
             log.info(qrRequest.toString());
             RVRedemptionRequest redemptionRequest = redemptionRequestRepository.findById(qrRequest.getId()).orElse(new RVRedemptionRequest());
             redemptionRequest.setRedeemStatus(qrRequest.getRedeemStatus());
+            Date currentDate= new Date();
+            redemptionRequest.setRedeemDate(currentDate.toString());
             redemptionRequestRepository.save(redemptionRequest);
             return getRedeemRequestListFromDatabase();
         }
