@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -51,8 +52,8 @@ public class RedemptionController {
             log.info(qrRequest.toString());
             RVRedemptionRequest redemptionRequest = redemptionRequestRepository.findById(qrRequest.getId()).orElse(new RVRedemptionRequest());
             redemptionRequest.setRedeemStatus(qrRequest.getRedeemStatus());
-            Date currentDate= new Date();
-            redemptionRequest.setRedeemDate(currentDate.toString());
+            LocalDate localDate = LocalDate.now();
+            redemptionRequest.setRedeemDate(localDate.toString());
             redemptionRequestRepository.save(redemptionRequest);
             return getRedeemRequestListFromDatabase();
         }
