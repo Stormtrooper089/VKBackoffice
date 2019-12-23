@@ -6,6 +6,7 @@ import com.vk.backoffice.qr.model.QrMaster;
 import com.vk.backoffice.qr.model.Statistic;
 import com.vk.backoffice.qr.service.DashboardServiceImpl;
 import com.vk.backoffice.qr.service.QrCodeServiceImpl;
+import com.vk.backoffice.qr.util.VankonConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -45,7 +46,7 @@ public class QrController {
     @TrackTime
     @RequestMapping(path = "/downloadExcel/{fileName}", method = RequestMethod.GET)
     public ResponseEntity downloadFile(@PathVariable(name = "fileName", required = true) String fileName) {
-        Resource resource = qrCodeService.createResource(fileName + ".xlsx");
+        Resource resource = qrCodeService.createResource(fileName + "."+ VankonConstant.XLSX);
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(MediaType.APPLICATION_OCTET_STREAM_VALUE))
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")

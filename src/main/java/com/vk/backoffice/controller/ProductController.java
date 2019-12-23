@@ -2,6 +2,7 @@ package com.vk.backoffice.controller;
 
 import com.vk.backoffice.qr.model.Product;
 import com.vk.backoffice.qr.service.ProductServiceImpl;
+import com.vk.backoffice.qr.util.VankonConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -41,7 +42,7 @@ public class ProductController {
             }
             return productService.processProductMaster(productList);
         }catch (Exception e){
-            return "failure";
+            return VankonConstant.FAILURE;
         }
     }
 	

@@ -3,6 +3,7 @@ package com.vk.backoffice.controller;
 import com.vk.backoffice.aspect.TrackTime;
 import com.vk.backoffice.qr.entity.RVRedemptionRequest;
 import com.vk.backoffice.qr.repository.RedemptionRequestRepository;
+import com.vk.backoffice.qr.util.VankonConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +36,7 @@ public class RedemptionController {
         redemptionlist = redemptionRequestRepository.findAll();
         log.info("redemptionList - "+redemptionlist.size());
         List<RVRedemptionRequest> listAfterFilters = redemptionlist.stream()
-                .filter(e -> e.getRedeemStatus().equalsIgnoreCase("Pending"))
+                .filter(e -> e.getRedeemStatus().equalsIgnoreCase(VankonConstant.PENDING))
                 .collect(Collectors.toList());
 
         log.info("redemptionList AFTER FILTER- "+listAfterFilters.size());
