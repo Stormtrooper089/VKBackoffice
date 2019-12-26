@@ -53,4 +53,25 @@ public class UserServiceImpl {
 		return Optional.empty();
 	}
 
+
+
+	public RequestStatusResponse updateKycStatus(String mobileNumber, String status) {
+		// TODO Auto-generated method stub
+		Optional<RVUserKyc> rvUserKyc = kycRepository.findByMobileNumber(mobileNumber);
+		RequestStatusResponse requestStatusResponse = new RequestStatusResponse();
+		requestStatusResponse.setResponseStatus(VankonConstant.FAILURE);
+		requestStatusResponse.setResponseStatusDescription("Unable to update the kyc");
+		if(rvUserKyc.isPresent()) {
+			rvUserKyc.get().setAdharCardStatus(VankonConstant.APPROVED);
+			rvUserKyc.get().setAdharCardStatus(VankonConstant.APPROVED);
+			rvUserKyc.get().setUserProfileStatus(VankonConstant.APPROVED);
+			
+			requestStatusResponse.setResponseStatus(VankonConstant.SUCCESS);
+			requestStatusResponse.setResponseStatusDescription("Successfully updated the kyc status");
+			
+			return requestStatusResponse;
+		}
+		return requestStatusResponse;
+	}
+
 }

@@ -52,4 +52,10 @@ public class AccountController {
 	        return userServiceImpl.getUserKyc(mobileNumber);
 	    }
 	    
+	    @TrackTime
+	    @GetMapping("/account/kyc/{mobileNumber}/{status}")
+	    public RequestStatusResponse updateKycStatus(@PathVariable String mobileNumber,@PathVariable String status) {
+	        return userServiceImpl.updateKycStatus(mobileNumber,status);
+	    }
+	    
 }
