@@ -111,9 +111,7 @@ public class UserController {
         if(userId != null) {
            return userRoleRepository.getRolesByUserId(userId);
         }
-        else
-        {
-            return null;
-        }
+        return null;
+       
     }
 }
