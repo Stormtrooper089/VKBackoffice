@@ -9,7 +9,7 @@ import com.vk.backoffice.qr.entity.RVUser;
 
 
 
-public interface UserRepository extends JpaRepository<RVUser, Long>{
+public interface AccountRepository extends JpaRepository<RVUser, Long>{
 	Optional<RVUser> findByMobileNumber(String mobileNumber);
 	Optional<RVUser> save(Optional<RVUser> rvUserFound);
 }

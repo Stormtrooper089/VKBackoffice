@@ -27,12 +27,12 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @RequestMapping("/api")
-public class UserController {
+public class AccountController {
 	
 	@Autowired
 	private UserServiceImpl userServiceImpl;
 	
-	 Logger log = LoggerFactory.getLogger(UserController.class);
+	 Logger log = LoggerFactory.getLogger(AccountController.class);
 
 	    @TrackTime
 	    @GetMapping("/account/list")

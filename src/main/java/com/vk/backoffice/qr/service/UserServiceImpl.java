@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.vk.backoffice.qr.entity.RVUser;
 import com.vk.backoffice.qr.entity.RVUserKyc;
 import com.vk.backoffice.qr.repository.KYCRepository;
-import com.vk.backoffice.qr.repository.UserRepository;
+import com.vk.backoffice.qr.repository.AccountRepository;
 import com.vk.backoffice.qr.util.RequestStatusResponse;
 import com.vk.backoffice.qr.util.VankonConstant;
 
@@ -17,7 +17,7 @@ import com.vk.backoffice.qr.util.VankonConstant;
 public class UserServiceImpl {
 	
 	@Autowired
-	private UserRepository userRepository;
+	private AccountRepository userRepository;
 	
 	@Autowired
 	private KYCRepository kycRepository;
