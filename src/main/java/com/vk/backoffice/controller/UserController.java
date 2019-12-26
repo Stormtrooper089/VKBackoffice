@@ -109,7 +109,7 @@ public class UserController {
     @GetMapping("/roles/{userId}")
     public List<UserRole> getUserRole(@PathVariable(name = "userId") Long userId){
         if(userId != null) {
-           return userRoleRepository.findAllById(Collections.singleton(userId));
+           return userRoleRepository.getRolesByUserId(userId);
         }
         else
         {
