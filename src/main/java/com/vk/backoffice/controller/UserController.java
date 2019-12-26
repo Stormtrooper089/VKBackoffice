@@ -33,7 +33,6 @@ public class UserController {
 	private UserServiceImpl userServiceImpl;
 	
 	 Logger log = LoggerFactory.getLogger(UserController.class);
-	 
 
 	    @TrackTime
 	    @GetMapping("/account/list")
