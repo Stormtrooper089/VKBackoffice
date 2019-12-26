@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -48,8 +49,17 @@ public class UserController {
 
     @PostMapping("/assignRole")
     public void assignRole(@RequestBody List<UserRole> userRoleList){
-        if(userRoleList.size() > 0)
-            userRoleRepository.saveAll(userRoleList);
+        if(userRoleList.size() > 0) {
+            List<UserRole> newRoleList = new ArrayList<>();
+            for(UserRole userRole: userRoleList){
+                UserRole role = new UserRole();
+                role.setRole(userRole.getRole());
+                role.setDelFlg(userRole.getDelFlg());
+                role.setUserId(userRole.getUserId());
+                newRoleList.add(role);
+            }
+            userRoleRepository.saveAll(newRoleList);
+        }
     }
 
     @GetMapping("/roles/{userId}")
