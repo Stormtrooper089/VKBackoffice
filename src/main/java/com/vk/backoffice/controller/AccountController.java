@@ -41,7 +41,7 @@ public class AccountController {
 	    }
 	    
 	    @TrackTime
-	    @PostMapping(path = "/updateUser")
+	    @PostMapping(path = "/account/updateUser")
 	    public RequestStatusResponse updateUser(@RequestBody RVUser toUpdateUser) {
 	        return userServiceImpl.updateUser(toUpdateUser);
 	    }
