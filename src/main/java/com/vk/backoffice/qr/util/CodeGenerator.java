@@ -61,6 +61,7 @@ public class CodeGenerator {
 			qrGenerated.setIsRedeemed("N");
 			qrGenerated.setValue(String.valueOf(crRequest.getPointsForCode()));
 			qrGenerated.setQrCode(qrCode);
+			qrGenerated.setProductName(crRequest.getProductId());
 			
 			listOfQrGenerated.add(qrGenerated);
 		}
