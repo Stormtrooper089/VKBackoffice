@@ -4,6 +4,7 @@ import com.vk.backoffice.qr.entity.User;
 import com.vk.backoffice.qr.entity.UserRole;
 import com.vk.backoffice.qr.repository.UserRepository;
 import com.vk.backoffice.qr.repository.UserRoleRepository;
+import com.vk.backoffice.qr.util.EncryptPasswordUtils;
 import com.vk.backoffice.qr.util.RequestStatusResponse;
 import com.vk.backoffice.qr.util.VankonConstant;
 import lombok.extern.slf4j.Slf4j;
@@ -43,7 +44,7 @@ public class UserController {
                     newUser.setDelFlg(user.getDelFlg());
                     newUser.setEmailId(user.getEmailId());
                     newUser.setMobileNumber(user.getMobileNumber());
-                    newUser.setPassword(user.getPassword());
+                    newUser.setPassword(EncryptPasswordUtils.encrytePassword(user.getPassword()));
                     userRepository.save(newUser);
                     response.setResponseStatus(VankonConstant.SUCCESS);
                     response.setResponseStatusDescription("User Created Successfully . .");
@@ -63,6 +64,7 @@ public class UserController {
         if(user!= null){
             RequestStatusResponse response = new RequestStatusResponse();
             try {
+                user.setPassword(EncryptPasswordUtils.encrytePassword(user.getPassword()));
                 userRepository.save(user);
                 response.setResponseStatus(VankonConstant.SUCCESS);
                 response.setResponseStatusDescription("User Updated Successfully . .");
@@ -106,10 +108,10 @@ public class UserController {
         return null;
     }
 
-    @GetMapping("/roles/{userId}")
-    public List<UserRole> getUserRole(@PathVariable(name = "userId") Long userId){
+    @GetMapping("/access/{userId}")
+    public List<UserRole> getUserRole(@PathVariable(name = "userId") String userId){
         if(userId != null) {
-           return userRoleRepository.getRolesByUserId(userId);
+           //return userRoleRepository.getRolesByUserId(userId);
         }
         return null;
        

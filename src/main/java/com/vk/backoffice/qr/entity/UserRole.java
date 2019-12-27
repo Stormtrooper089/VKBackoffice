@@ -13,7 +13,7 @@ public class UserRole {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Column(name = "userId")
-    private Long userId;
+    private String userId;
     @Column(name = "role")
     private String role;
     @Column(name = "delFlg")
@@ -27,11 +27,11 @@ public class UserRole {
         this.id = id;
     }
 
-    public Long getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

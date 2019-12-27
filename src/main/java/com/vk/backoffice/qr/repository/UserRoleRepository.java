@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface UserRoleRepository extends JpaRepository<UserRole,Long> {
-    @Query("select e from UserRole e where e.userId = :userId")
-    List<UserRole> getRolesByUserId(Long userId);
+    @Query("select e.role from UserRole e where e.userId = :userId")
+    List<String> getRolesByUserId(String userId);
 }
