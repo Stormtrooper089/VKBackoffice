@@ -76,7 +76,7 @@ public class CodeGenerator {
     }
     private String getBatchID() {
     	
-		return String.valueOf(TimeUnit.MILLISECONDS);
+		return String.valueOf(System.currentTimeMillis());
 	}
 	private static BigInteger randomNumberGenerator() {
         Random randomNumberGenerator = new Random();
