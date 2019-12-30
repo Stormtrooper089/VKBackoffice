@@ -5,10 +5,9 @@ import com.vk.backoffice.qr.model.FcmNotification;
 import com.vk.backoffice.qr.service.NotificationServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @Slf4j
@@ -21,5 +20,10 @@ public class NotificationController {
     @PostMapping("/public")
     public String pushNotificationToAllUser(@RequestBody NotificationRequest notification){
             return notificationService.pushNotificationToAllUser(notification);
+    }
+
+    @GetMapping("/list")
+    public List<NotificationRequest> getAllNotifications(){
+        return notificationService.getAllNotifications();
     }
 }

@@ -13,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 
 @Service
@@ -63,5 +64,9 @@ public class NotificationServiceImpl {
 
         HttpEntity<String> httpEntity = new HttpEntity<>(json.toString(), httpHeaders);
         return restTemplate.postForObject(uri, httpEntity, String.class);
+    }
+
+    public List<NotificationRequest> getAllNotifications(){
+        return notificationRequestRepository.findAll();
     }
 }
