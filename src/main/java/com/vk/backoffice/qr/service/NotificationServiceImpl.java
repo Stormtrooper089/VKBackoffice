@@ -40,7 +40,7 @@ public class NotificationServiceImpl {
 
         String response = callToFcmServer(msg, fcmNotification.getNotificationReceiverKey());
         if (response.contains("message_id")) {
-            fcmNotification.setNotificationCreationDate(new Date(localDate.getYear(),localDate.getMonth().getValue(),localDate.getDayOfMonth()));
+            //fcmNotification.setNotificationCreationDate(new Date(localDate.getYear(),localDate.getMonth().getValue(),localDate.getDayOfMonth()));
             notificationRequestRepository.save(fcmNotification);
             return VankonConstant.SUCCESS;
         } else {
