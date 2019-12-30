@@ -26,21 +26,45 @@ public class RVUserKyc {
 	
 	@Column(name="panCardStatus")
 	private String panCardStatus;
-	
+
+	public Byte[] getPanCardEncodedImage() {
+		return panCardEncodedImage;
+	}
+
+	public void setPanCardEncodedImage(Byte[] panCardEncodedImage) {
+		this.panCardEncodedImage = panCardEncodedImage;
+	}
+
+	public Byte[] getAdharCardEncodedImage() {
+		return adharCardEncodedImage;
+	}
+
+	public void setAdharCardEncodedImage(Byte[] adharCardEncodedImage) {
+		this.adharCardEncodedImage = adharCardEncodedImage;
+	}
+
+	public Byte[] getUserProfileImage() {
+		return userProfileImage;
+	}
+
+	public void setUserProfileImage(Byte[] userProfileImage) {
+		this.userProfileImage = userProfileImage;
+	}
+
 	@Column(name="panCardEncodedImage")
-	private Blob panCardEncodedImage;
+	private Byte[] panCardEncodedImage;
 	
 	@Column(name="adharCardStatus")
 	private String adharCardStatus;
 	
 	@Column(name="adharCardEncodedImage")
-	private Blob adharCardEncodedImage;
+	private Byte[] adharCardEncodedImage;
 	
 	@Column(name="userProfile")
 	private String userProfileStatus;
 	
 	@Column(name="userProfileImage")
-	private Blob userProfileImage;
+	private Byte[] userProfileImage;
 
 
 
@@ -86,16 +110,6 @@ public class RVUserKyc {
 
 
 
-	public Blob getPanCardEncodedImage() {
-		return panCardEncodedImage;
-	}
-
-
-
-	public void setPanCardEncodedImage(Blob panCardEncodedImage) {
-		this.panCardEncodedImage = panCardEncodedImage;
-	}
-
 
 
 	public String getAdharCardStatus() {
@@ -110,15 +124,6 @@ public class RVUserKyc {
 
 
 
-	public Blob getAdharCardEncodedImage() {
-		return adharCardEncodedImage;
-	}
-
-
-
-	public void setAdharCardEncodedImage(Blob adharCardEncodedImage) {
-		this.adharCardEncodedImage = adharCardEncodedImage;
-	}
 
 
 
@@ -130,18 +135,6 @@ public class RVUserKyc {
 
 	public void setUserProfileStatus(String userProfileStatus) {
 		this.userProfileStatus = userProfileStatus;
-	}
-
-
-
-	public Blob getUserProfileImage() {
-		return userProfileImage;
-	}
-
-
-
-	public void setUserProfileImage(Blob userProfileImage) {
-		this.userProfileImage = userProfileImage;
 	}
 
 
