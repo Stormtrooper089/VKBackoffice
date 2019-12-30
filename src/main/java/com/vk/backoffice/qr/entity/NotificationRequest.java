@@ -1,9 +1,6 @@
 package com.vk.backoffice.qr.entity;
 
-import org.springframework.data.annotation.CreatedDate;
-
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table(name = "notifications")
@@ -23,10 +20,8 @@ public class NotificationRequest {
     @Column(name = "notificationReceiverKey")
     private String notificationReceiverKey;
 
-    @CreatedDate
-    @Temporal(TemporalType.DATE)
     @Column(name = "notificationCreationDate")
-    private Date notificationCreationDate;
+    private String notificationCreationDate;
 
     public Long getNotificationId() {
         return notificationId;
@@ -60,11 +55,11 @@ public class NotificationRequest {
         this.notificationReceiverKey = notificationReceiverKey;
     }
 
-    public Date getNotificationCreationDate() {
+    public String getNotificationCreationDate() {
         return notificationCreationDate;
     }
 
-    public void setNotificationCreationDate(Date notificationCreationDate) {
+    public void setNotificationCreationDate(String notificationCreationDate) {
         this.notificationCreationDate = notificationCreationDate;
     }
 

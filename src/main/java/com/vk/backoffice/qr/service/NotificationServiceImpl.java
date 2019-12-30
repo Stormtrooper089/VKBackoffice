@@ -11,6 +11,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -40,7 +42,9 @@ public class NotificationServiceImpl {
 
         String response = callToFcmServer(msg, fcmNotification.getNotificationReceiverKey());
         if (response.contains("message_id")) {
-            //fcmNotification.setNotificationCreationDate(new Date(localDate.getYear(),localDate.getMonth().getValue(),localDate.getDayOfMonth()));
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            Date date = new Date();
+            fcmNotification.setNotificationCreationDate(dateFormat.format(date));
             notificationRequestRepository.save(fcmNotification);
             return VankonConstant.SUCCESS;
         } else {
