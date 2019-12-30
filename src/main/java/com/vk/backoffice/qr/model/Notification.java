@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class Notification {
     String title;
-    String text;
+    String body;
     String sound;
     String click_action;
 
@@ -17,12 +17,12 @@ public class Notification {
         this.title = title;
     }
 
-    public String getText() {
-        return text;
+    public String getBody() {
+        return body;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setBody(String body) {
+        this.body = body;
     }
 
     public String getSound() {

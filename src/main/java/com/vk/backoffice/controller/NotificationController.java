@@ -1,5 +1,6 @@
 package com.vk.backoffice.controller;
 
+import com.vk.backoffice.qr.entity.NotificationRequest;
 import com.vk.backoffice.qr.model.FcmNotification;
 import com.vk.backoffice.qr.service.NotificationServiceImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +19,7 @@ public class NotificationController {
     NotificationServiceImpl notificationService;
 
     @PostMapping("/public")
-    public String pushNotificationToAllUser(@RequestBody FcmNotification notification){
+    public String pushNotificationToAllUser(@RequestBody NotificationRequest notification){
             return notificationService.pushNotificationToAllUser(notification);
     }
 }
