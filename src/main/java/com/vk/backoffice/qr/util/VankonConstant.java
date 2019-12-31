@@ -7,4 +7,5 @@ public class VankonConstant {
     public static final String XLSX = "xlsx";
     public static final String SUCCESS = "Success";
     public static final String UNKNOWN = "Unknown";
+    public static final String REJECT = "Rejected";
 }
