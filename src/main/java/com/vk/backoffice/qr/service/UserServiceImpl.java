@@ -64,7 +64,7 @@ public class UserServiceImpl {
 		try {
 			Optional<RVUserKyc> rvUserKyc = kycRepository.findByMobileNumber(mobileNumber);
 			if (rvUserKyc.isPresent()) {
-				rvUserKyc.get().setAdharCardStatus(status);
+				rvUserKyc.get().setPanCardStatus(status);
 				rvUserKyc.get().setAdharCardStatus(status);
 				rvUserKyc.get().setUserProfileStatus(status);
 				kycRepository.save(rvUserKyc.get());
