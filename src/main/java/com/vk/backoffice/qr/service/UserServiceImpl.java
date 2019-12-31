@@ -67,7 +67,7 @@ public class UserServiceImpl {
 				rvUserKyc.get().setAdharCardStatus(status);
 				rvUserKyc.get().setAdharCardStatus(status);
 				rvUserKyc.get().setUserProfileStatus(status);
-
+				kycRepository.save(rvUserKyc.get());
 				requestStatusResponse.setResponseStatus(VankonConstant.SUCCESS);
 				requestStatusResponse.setResponseStatusDescription("Successfully updated the kyc status");
 			}
