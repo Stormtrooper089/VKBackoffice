@@ -3,6 +3,7 @@ package com.vk.backoffice.qr.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -57,21 +58,26 @@ public class UserServiceImpl {
 
 	public RequestStatusResponse updateKycStatus(String mobileNumber, String status) {
 		// TODO Auto-generated method stub
-		Optional<RVUserKyc> rvUserKyc = kycRepository.findByMobileNumber(mobileNumber);
 		RequestStatusResponse requestStatusResponse = new RequestStatusResponse();
 		requestStatusResponse.setResponseStatus(VankonConstant.FAILURE);
 		requestStatusResponse.setResponseStatusDescription("Unable to update the kyc");
-		if(rvUserKyc.isPresent()) {
-			rvUserKyc.get().setAdharCardStatus(VankonConstant.APPROVED);
-			rvUserKyc.get().setAdharCardStatus(VankonConstant.APPROVED);
-			rvUserKyc.get().setUserProfileStatus(VankonConstant.APPROVED);
-			
-			requestStatusResponse.setResponseStatus(VankonConstant.SUCCESS);
-			requestStatusResponse.setResponseStatusDescription("Successfully updated the kyc status");
-			
+		try {
+			Optional<RVUserKyc> rvUserKyc = kycRepository.findByMobileNumber(mobileNumber);
+			if (rvUserKyc.isPresent()) {
+				rvUserKyc.get().setAdharCardStatus(status);
+				rvUserKyc.get().setAdharCardStatus(status);
+				rvUserKyc.get().setUserProfileStatus(status);
+
+				requestStatusResponse.setResponseStatus(VankonConstant.SUCCESS);
+				requestStatusResponse.setResponseStatusDescription("Successfully updated the kyc status");
+			}
+		}
+		catch (Exception e){
+
+		}
+		finally {
 			return requestStatusResponse;
 		}
-		return requestStatusResponse;
 	}
 
 }
