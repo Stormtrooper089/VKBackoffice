@@ -37,7 +37,7 @@ public class CodeGenerator {
         //Get batchId
     	List<QRGenerated> listOfQrGenerated = new ArrayList<QRGenerated>();
     	
-    	String batchIdString = getBatchID(); 
+    	String batchIdString = getBatchID(crRequest.getProductId()); 
     	Date dateToday =  new Date();
     	Optional<LastQrNumber> lastQrNumber = generatedLastQrNumberInfo.findById((long) 1);
         BigInteger batchToStartFrom= new BigInteger(lastQrNumber.get().getLastNumberGenerated());
@@ -74,9 +74,9 @@ public class CodeGenerator {
         generatedQrCodeRepository.saveAll(listOfQrGenerated);
         return generatedCodeList;
     }
-    private String getBatchID() {
-    	
-		return String.valueOf(System.currentTimeMillis());
+    private String getBatchID(String productId) {
+    	Date date = new Date();
+		return productId.concat(date.toString());
 	}
 	private static BigInteger randomNumberGenerator() {
         Random randomNumberGenerator = new Random();
