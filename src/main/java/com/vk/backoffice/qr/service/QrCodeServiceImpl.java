@@ -183,6 +183,7 @@ public class QrCodeServiceImpl {
        catch (Exception ex){
            response.setResponseStatus(VankonConstant.FAILURE);
            response.setResponseStatusDescription("Qr batch does not exist. Please contact Tech Support.");
+           ex.printStackTrace();
        }
         return response;
     }
