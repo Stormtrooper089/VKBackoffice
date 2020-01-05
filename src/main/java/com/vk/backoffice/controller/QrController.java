@@ -1,11 +1,13 @@
 package com.vk.backoffice.controller;
 
 import com.vk.backoffice.aspect.TrackTime;
+import com.vk.backoffice.qr.entity.RVUser;
 import com.vk.backoffice.qr.model.CreateQrRequest;
 import com.vk.backoffice.qr.model.QrMaster;
 import com.vk.backoffice.qr.model.Statistic;
 import com.vk.backoffice.qr.service.DashboardServiceImpl;
 import com.vk.backoffice.qr.service.QrCodeServiceImpl;
+import com.vk.backoffice.qr.util.RequestStatusResponse;
 import com.vk.backoffice.qr.util.VankonConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,5 +64,11 @@ public class QrController {
     @GetMapping(path = "/qrStats/{statType}")
     public List<Statistic> getQrStats(@PathVariable String statType) {
         return dashboardService.getQrGenerationStats(statType);
+    }
+
+    @TrackTime
+    @PostMapping(path = "/updateQrList")
+    public RequestStatusResponse updateUser(@RequestBody QrMaster toUpdateQr) {
+        return qrCodeService.activateQrBatch(toUpdateQr);
     }
 }

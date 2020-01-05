@@ -8,8 +8,11 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import com.vk.backoffice.qr.entity.QrMeta;
 import com.vk.backoffice.qr.model.CreateQrRequest;
 import com.vk.backoffice.qr.model.QrMaster;
+import com.vk.backoffice.qr.repository.GeneratedQrCodeRepository;
 import com.vk.backoffice.qr.repository.GeneratedQrMetaInfoRepo;
 import com.vk.backoffice.qr.util.CodeGenerator;
+import com.vk.backoffice.qr.util.RequestStatusResponse;
+import com.vk.backoffice.qr.util.VankonConstant;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.util.IOUtils;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -25,6 +28,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class QrCodeServiceImpl {
@@ -40,6 +44,9 @@ public class QrCodeServiceImpl {
     @Autowired
     @Lazy
     private GeneratedQrMetaInfoRepo generatedQrMetaInfoRepo;
+
+    @Autowired
+    private GeneratedQrCodeRepository generatedQrCodeRepository;
 
     public Resource generateCodeByProductToExcel(CreateQrRequest qrRequest) {
 
@@ -156,5 +163,27 @@ public class QrCodeServiceImpl {
             qrMasters.add(qrMaster);
         }
         return qrMasters;
+    }
+
+    public RequestStatusResponse activateQrBatch(QrMaster qrMaster){
+       RequestStatusResponse response = new RequestStatusResponse();
+        try {
+           Optional<QrMeta> qrMeta = generatedQrMetaInfoRepo.findById(qrMaster.getId());
+           if (qrMeta.isPresent()) {
+               qrMeta.get().setActivationStatus(1);
+               generatedQrMetaInfoRepo.save(qrMeta.get());
+               generatedQrCodeRepository.updateGeneratedQrCode(qrMaster.getBatchId());
+               response.setResponseStatus(VankonConstant.SUCCESS);
+               response.setResponseStatusDescription("QR batch is now activated.");
+           }else{
+               response.setResponseStatus(VankonConstant.FAILURE);
+               response.setResponseStatusDescription("Qr batch does not exist. Please contact Tech Support.");
+           }
+       }
+       catch (Exception ex){
+           response.setResponseStatus(VankonConstant.FAILURE);
+           response.setResponseStatusDescription("Qr batch does not exist. Please contact Tech Support.");
+       }
+        return response;
     }
 }
