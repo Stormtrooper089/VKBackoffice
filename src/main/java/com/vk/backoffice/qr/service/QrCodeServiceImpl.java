@@ -22,6 +22,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
@@ -165,6 +166,7 @@ public class QrCodeServiceImpl {
         return qrMasters;
     }
 
+    @Transactional
     public RequestStatusResponse activateQrBatch(QrMaster qrMaster){
        RequestStatusResponse response = new RequestStatusResponse();
         try {
