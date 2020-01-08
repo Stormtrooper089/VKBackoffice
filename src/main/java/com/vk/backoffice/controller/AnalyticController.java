@@ -25,7 +25,7 @@ public class AnalyticController {
         return dashboardService.getTotalPointsScanned(fromDate,toDate);
     }
     @RequestMapping("/top/10/products/{fromDate}/{toDate}")
-    public List<Object> getTopScannedProducts(@PathVariable String fromDate, @PathVariable String toDate){
+    public List<Object[]> getTopScannedProducts(@PathVariable String fromDate, @PathVariable String toDate){
         return dashboardService.getTop10ScannedProducts(fromDate,toDate);
     }
 }

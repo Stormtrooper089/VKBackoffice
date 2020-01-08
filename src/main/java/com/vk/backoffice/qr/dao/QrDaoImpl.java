@@ -85,7 +85,7 @@ public class QrDaoImpl {
             return null;
         }
     }
-    public List<Object> getTop10ScannedProducts(String fromDate,String toDate){
+    public List<Object[]> getTop10ScannedProducts(String fromDate,String toDate){
         try {
             Query query = entityManager.createNativeQuery(getTop10ScannedProductsQuery());
             query.setParameter("fromDate", fromDate);

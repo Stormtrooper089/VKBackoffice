@@ -45,7 +45,7 @@ public class DashboardServiceImpl {
         return qrDao.getTotalRedeemAmount(fromDate,toDate);
     }
 
-    public List<Object> getTop10ScannedProducts(String fromDate,String toDate){
+    public List<Object[]> getTop10ScannedProducts(String fromDate,String toDate){
         return qrDao.getTop10ScannedProducts(fromDate,toDate);
     }
 }
