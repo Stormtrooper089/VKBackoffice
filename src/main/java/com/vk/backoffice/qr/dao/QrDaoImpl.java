@@ -32,7 +32,15 @@ public class QrDaoImpl {
                 "                from rvqr_code " +
                 "                group by MONTH(redeem_date)";
     }
+    private String getTotalQrScannedQuery(){
+        return "SELECT SUM(redeem_value) FROM rvqr_code" +
+                " where STR_TO_DATE(redeem_date,'%Y-%m-%d') BETWEEN STR_TO_DATE(:fromDate,'%Y-%m-%d') AND STR_TO_DATE(:toDate,'%Y-%m-%d')";
+    }
 
+    private String getTotalRedeemQuery(){
+        return "SELECT SUM(redeem_value) FROM rv_redemption" +
+                " where STR_TO_DATE(redeem_date,'%Y-%m-%d') BETWEEN STR_TO_DATE(:fromDate,'%Y-%m-%d') AND STR_TO_DATE(:toDate,'%Y-%m-%d')";
+    }
     public List<Object[]> getGeneratedQrStatisticsByMonth(String queryType) {
         try {
             String queryString = new String();
@@ -49,4 +57,25 @@ public class QrDaoImpl {
 
     }
 
+    public String getTotalQrScannedAmount(String fromDate, String toDate){
+        try {
+            Query query = entityManager.createNativeQuery(getTotalQrScannedQuery());
+            query.setParameter("fromDate", fromDate);
+            query.setParameter("toDate", toDate);
+            return query.getSingleResult().toString();
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+    public String getTotalRedeemAmount(String fromDate, String toDate){
+        try {
+            Query query = entityManager.createNativeQuery(getTotalRedeemQuery());
+            query.setParameter("fromDate", fromDate);
+            query.setParameter("toDate", toDate);
+            return query.getSingleResult().toString();
+        }catch (Exception e){
+            return null;
+        }
+    }
 }

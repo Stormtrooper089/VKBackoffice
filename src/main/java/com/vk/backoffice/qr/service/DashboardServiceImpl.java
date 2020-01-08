@@ -4,6 +4,7 @@ import com.vk.backoffice.qr.dao.QrDaoImpl;
 import com.vk.backoffice.qr.model.Statistic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -37,4 +38,10 @@ public class DashboardServiceImpl {
         return statisticList;
     }
 
+    public String getTotalPointsScanned(String fromDate, String toDate){
+        return qrDao.getTotalQrScannedAmount(fromDate,toDate);
+    }
+    public String getTotalPointsRedeemed(String fromDate, String toDate){
+        return qrDao.getTotalRedeemAmount(fromDate,toDate);
+    }
 }

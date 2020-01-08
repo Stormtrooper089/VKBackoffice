@@ -8,4 +8,5 @@ public class VankonConstant {
     public static final String SUCCESS = "Success";
     public static final String UNKNOWN = "Unknown";
     public static final String REJECT = "Rejected";
+    public static final String DATE_FORMAT = "YYYY-MM-DD";
 }
