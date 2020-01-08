@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/analytic")
 public class AnalyticController {
@@ -21,5 +23,9 @@ public class AnalyticController {
     @RequestMapping("/total/points/redeeemed/{fromDate}/{toDate}")
     public String getTotalPointsRedeemed(@PathVariable String fromDate,@PathVariable String toDate){
         return dashboardService.getTotalPointsScanned(fromDate,toDate);
+    }
+    @RequestMapping("/top/10/products/{fromDate}/{toDate}")
+    public List<Object> getTopScannedProducts(@PathVariable String fromDate, @PathVariable String toDate){
+        return dashboardService.getTop10ScannedProducts(fromDate,toDate);
     }
 }

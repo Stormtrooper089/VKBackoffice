@@ -41,6 +41,13 @@ public class QrDaoImpl {
         return "SELECT SUM(redeem_value) FROM rv_redemption" +
                 " where STR_TO_DATE(redeem_date,'%Y-%m-%d') BETWEEN STR_TO_DATE(:fromDate,'%Y-%m-%d') AND STR_TO_DATE(:toDate,'%Y-%m-%d')";
     }
+
+    private String getTop10ScannedProductsQuery(){
+        return "SELECT qg.product_name,count(rc.id) FROM rvqr_code rc inner join qrgenerated qg on rc.qr_code= qg.qr_code " +
+                " where STR_TO_DATE(redeem_date,'%Y-%m-%d') BETWEEN STR_TO_DATE(:fromDate,'%Y-%m-%d') AND STR_TO_DATE(:toDate,'%Y-%m-%d') " +
+                " GROUP BY qg.product_name" +
+                " order by count(rc.id) desc LIMIT 10";
+    }
     public List<Object[]> getGeneratedQrStatisticsByMonth(String queryType) {
         try {
             String queryString = new String();
@@ -74,6 +81,16 @@ public class QrDaoImpl {
             query.setParameter("fromDate", fromDate);
             query.setParameter("toDate", toDate);
             return query.getSingleResult().toString();
+        }catch (Exception e){
+            return null;
+        }
+    }
+    public List<Object> getTop10ScannedProducts(String fromDate,String toDate){
+        try {
+            Query query = entityManager.createNativeQuery(getTop10ScannedProductsQuery());
+            query.setParameter("fromDate", fromDate);
+            query.setParameter("toDate", toDate);
+            return query.getResultList();
         }catch (Exception e){
             return null;
         }
