@@ -21,7 +21,7 @@ public class AnalyticController {
             return dashboardService.getTotalPointsScanned(fromDate,toDate);
     }
 
-    @RequestMapping("/total/points/redeeemed/{fromDate}/{toDate}")
+    @RequestMapping("/total/points/redeemed/{fromDate}/{toDate}")
     public String getTotalPointsRedeemed(@PathVariable String fromDate,@PathVariable String toDate){
         return dashboardService.getTotalPointsScanned(fromDate,toDate);
     }
