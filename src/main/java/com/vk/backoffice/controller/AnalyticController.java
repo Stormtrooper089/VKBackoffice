@@ -28,4 +28,9 @@ public class AnalyticController {
     public List<Object[]> getTopScannedProducts(@PathVariable String fromDate, @PathVariable String toDate){
         return dashboardService.getTop10ScannedProducts(fromDate,toDate);
     }
+
+    @RequestMapping("/total/user")
+    public List<Object[]> totalUser(){
+        return dashboardService.getTotalUser();
+    }
 }

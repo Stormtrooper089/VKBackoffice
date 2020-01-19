@@ -48,6 +48,9 @@ public class QrDaoImpl {
                 " GROUP BY qg.product_name" +
                 " order by count(rc.id) desc LIMIT 10";
     }
+    private String getTotalUserQuery(){
+        return "select active,COUNT(*) as count from rv_user group by active order by active DESC";
+    }
     public List<Object[]> getGeneratedQrStatisticsByMonth(String queryType) {
         try {
             String queryString = new String();
@@ -90,6 +93,15 @@ public class QrDaoImpl {
             Query query = entityManager.createNativeQuery(getTop10ScannedProductsQuery());
             query.setParameter("fromDate", fromDate);
             query.setParameter("toDate", toDate);
+            return query.getResultList();
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+    public List<Object[]> getTotalUser(){
+        try {
+            Query query = entityManager.createNativeQuery(getTotalUserQuery());
             return query.getResultList();
         }catch (Exception e){
             return null;

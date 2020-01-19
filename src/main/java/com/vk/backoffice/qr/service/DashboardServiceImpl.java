@@ -48,4 +48,8 @@ public class DashboardServiceImpl {
     public List<Object[]> getTop10ScannedProducts(String fromDate,String toDate){
         return qrDao.getTop10ScannedProducts(fromDate,toDate);
     }
+
+    public List<Object[]> getTotalUser(){
+        return qrDao.getTotalUser();
+    }
 }
