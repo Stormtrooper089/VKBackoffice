@@ -1,5 +1,6 @@
 package com.vk.backoffice.controller;
 
+import com.vk.backoffice.qr.model.UserStat;
 import com.vk.backoffice.qr.service.DashboardServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,7 +31,7 @@ public class AnalyticController {
     }
 
     @RequestMapping("/total/user")
-    public List<Object[]> totalUser(){
+    public List<UserStat> totalUser(){
         return dashboardService.getTotalUser();
     }
 }

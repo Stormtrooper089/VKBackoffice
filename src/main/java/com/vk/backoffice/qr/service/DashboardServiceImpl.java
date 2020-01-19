@@ -2,9 +2,10 @@ package com.vk.backoffice.qr.service;
 
 import com.vk.backoffice.qr.dao.QrDaoImpl;
 import com.vk.backoffice.qr.model.Statistic;
+import com.vk.backoffice.qr.model.UserStat;
+import com.vk.backoffice.qr.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -16,6 +17,9 @@ public class DashboardServiceImpl {
 
     @Autowired
     private QrDaoImpl qrDao;
+
+    @Autowired
+    AccountRepository userRepository;
 
     public List<Statistic> getQrGenerationStats(String queryType) {
         List<Object[]> objectList = qrDao.getGeneratedQrStatisticsByMonth(queryType);
@@ -49,7 +53,8 @@ public class DashboardServiceImpl {
         return qrDao.getTop10ScannedProducts(fromDate,toDate);
     }
 
-    public List<Object[]> getTotalUser(){
-        return qrDao.getTotalUser();
+    public List<UserStat> getTotalUser(){
+
+        return userRepository.getUserCountByActiveStatus();
     }
 }
